@@ -13,24 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.composematerial3.addTasks.ui.TasksScreen
 import com.example.composematerial3.addTasks.ui.TasksViewModel
+import com.example.composematerial3.components.scaffold.ScaffoldViewModel
 import com.example.composematerial3.ui.theme.ComposeMaterial3Theme
 
 class MainActivity : ComponentActivity() {
 
     private val tasksViewModel : TasksViewModel by viewModels()
+    private val scaffoldViewModel : ScaffoldViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeMaterial3Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    TasksScreen(tasksViewModel)
-                }
-            }
+            TodoContainerApp( tasksViewModel ,scaffoldViewModel)
         }
     }
 }
