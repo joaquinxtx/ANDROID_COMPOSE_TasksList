@@ -20,8 +20,6 @@ fun TodoContainerApp(
 
     ) {
     ComposeMaterial3Theme {
-
-
             TodoNavGraph(tasksViewModel = tasksViewModel, scaffoldViewModel = scaffoldViewModel)
 
     }

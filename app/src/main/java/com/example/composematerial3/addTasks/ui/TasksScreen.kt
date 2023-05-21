@@ -1,6 +1,9 @@
 package com.example.composematerial3.addTasks.ui
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 
@@ -19,129 +22,51 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.composematerial3.addTasks.ui.components.AddTasksDialog
+import com.example.composematerial3.addTasks.ui.components.FabDialog
 
-@OptIn(ExperimentalAnimationApi::class)
+
 @Composable
-fun TasksScreen(tasksViewModel: TasksViewModel , index:Boolean) {
+fun TasksScreen(tasksViewModel: TasksViewModel, index: Boolean) {
 
     val showDialog: Boolean by tasksViewModel.showDialog.observeAsState(false)
     AnimatedVisibility(
-        visible = index ,
-        enter = scaleIn() + expandVertically(expandFrom = Alignment.CenterVertically),
-        exit = scaleOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically)
-    ){
-    Box(Modifier.fillMaxSize()) {
-        AddTasksDialog(
-            show = showDialog,
-            onDismiss = { tasksViewModel.onDialogClose() },
-            onTaskAdded = {
-                tasksViewModel.onTaskCreated(it)
-            })
-        FabDialog(Modifier.align(Alignment.BottomEnd).padding(bottom = 90.dp , end = 10.dp),tasksViewModel)
-
-    }
-
-    }
-
-}
-
-@Composable
-fun FabDialog(modifier: Modifier, tasksViewModel: TasksViewModel) {
-
-    FloatingActionButton(onClick = {
-        tasksViewModel.onShowDialogClick()
-    }, modifier = modifier) {
-        Icon(Icons.Filled.Add, contentDescription = "")
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, onTaskAdded: (String) -> Unit) {
-    var myTask by remember { mutableStateOf("") }
-    if (show) {
-        Dialog(onDismissRequest = { onDismiss() }) {
-            Card(
-                colors = CardDefaults.cardColors(Color.White)
-
-            ) {
-                Column {
-                    Box(
-                        modifier = Modifier
-                            .align(
-                                Alignment.CenterHorizontally
-                            )
-                            .padding(top = 16.dp)
-                    ) {
-                        Icon(
-                            Icons.Filled.Check, contentDescription = " ",
-                            Modifier
-                                .size(29.dp)
-
-                        )
-
-                    }
-                    Text(
-                        text = "Desea Agreagar una tarea?",
-                        Modifier
-                            .align(
-                                Alignment.CenterHorizontally
-                            )
-                            .padding(top = 16.dp)
-                    )
-                    Divider(
-                        thickness = 1.dp,
-                        color = Color.LightGray,
-                        modifier = Modifier
-                            .padding(vertical = 24.dp)
-                            .width(560.dp)
-                    )
-                    OutlinedTextField(
-                        colors = TextFieldDefaults.textFieldColors(Color.Gray),
-                        value = myTask,
-                        onValueChange = { myTask = it },
-                        label = { Text("Tarea") },
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                            .background(Color.White)
-                    )
-                    Divider(
-                        thickness = 1.dp,
-                        color = Color.LightGray,
-                        modifier = Modifier
-                            .padding(top = 24.dp)
-                            .width(560.dp)
-                    )
-                    ButtonsActions(
-                        addTask = { onTaskAdded(myTask) }, modifier = Modifier.align(
-                            Alignment.End
-                        ),
-                        cancel = {onDismiss()}
-                    )
-
-
-                }
-
-            }
-
+        visible = index,
+        enter = expandHorizontally { 20 },
+        exit = shrinkHorizontally(
+            animationSpec = tween(),
+            shrinkTowards = Alignment.End,
+        ) { fullWidth ->
+            fullWidth / 4
         }
-    }
 
-}
-
-@Composable
-fun ButtonsActions(modifier: Modifier, addTask: () -> Unit, cancel: () -> Unit) {
-    Row(modifier = modifier.padding(bottom = 16.dp)) {
-        TextButton(onClick = { cancel() }) {
-            Text(text = "Cancel")
-        }
-        TextButton(onClick = { addTask() }) {
-            Text(text = "Accept")
+    ) {
+        Box(
+            Modifier
+                .fillMaxSize()
+        ) {
+            TasksList(tasksViewModel = tasksViewModel)
+            AddTasksDialog(
+                show = showDialog,
+                onDismiss = { tasksViewModel.onDialogClose() },
+                onTaskAdded = {
+                    tasksViewModel.onTaskCreated(it)
+                })
+            FabDialog(
+                Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(bottom = 90.dp, end = 10.dp), tasksViewModel
+            )
         }
 
     }
 
 }
+
+
+
+
+
+
 
