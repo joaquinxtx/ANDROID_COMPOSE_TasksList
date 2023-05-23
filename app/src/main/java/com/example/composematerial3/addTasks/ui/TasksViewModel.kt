@@ -14,6 +14,14 @@ class TasksViewModel @Inject constructor(
 
     private val _showDialog = MutableLiveData<Boolean>()
     val showDialog:LiveData<Boolean> = _showDialog
+    private val _selectedItemIndex = MutableLiveData<Int>()
+    val selectedItemIndex: LiveData<Int> = _selectedItemIndex
+
+    fun setSelectedItemIndex(index: Int) {
+        _selectedItemIndex.value = index
+    }
+
+
 
     private val _showDialogRemove = MutableLiveData<Boolean>()
     val showDialogRemove:LiveData<Boolean> = _showDialogRemove
@@ -26,6 +34,7 @@ class TasksViewModel @Inject constructor(
     }
     fun onDialogRemoveClose(){
         _showDialogRemove.value=false
+
     }
 
     fun onTaskCreated(task: String) {
@@ -36,8 +45,11 @@ class TasksViewModel @Inject constructor(
     fun onShowDialogClick() {
         _showDialog.value=true
     }
-    fun onShowDialogRemove() {
-        _showDialogRemove.value=true
+    fun onShowDialogRemove(taskModel: TaskModel) {
+        val index = _task.indexOf(taskModel)
+        setSelectedItemIndex(index)
+        _showDialogRemove.value = true
+
     }
 
     fun onCheckBoxSelected(taskModel: TaskModel) {
@@ -53,5 +65,9 @@ class TasksViewModel @Inject constructor(
         _showDialogRemove.value=false
 
     }
+
+
+
+
 
 }

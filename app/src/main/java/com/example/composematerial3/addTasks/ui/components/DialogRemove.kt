@@ -17,9 +17,9 @@ import com.example.composematerial3.addTasks.ui.model.TaskModel
 
 
 @Composable
-fun DialogRemove(show: Boolean, onDismiss: () -> Unit, taskModel: TaskModel ,tasksViewModel: TasksViewModel){
+fun DialogRemove( onDismiss: () -> Unit,  onConfirm:()-> Unit){
 
-    if (show) {
+
         Dialog(onDismissRequest = { onDismiss() }) {
             Card(
                 colors = CardDefaults.cardColors(Color.White)
@@ -66,7 +66,7 @@ fun DialogRemove(show: Boolean, onDismiss: () -> Unit, taskModel: TaskModel ,tas
                     )
                     ButtonsActions(
                         addTask = {
-                            tasksViewModel.onItemRemove(taskModel)
+                            onConfirm()
 
                         }, modifier = Modifier.align(
                             Alignment.End
@@ -81,5 +81,4 @@ fun DialogRemove(show: Boolean, onDismiss: () -> Unit, taskModel: TaskModel ,tas
             }
 
         }
-}
 }

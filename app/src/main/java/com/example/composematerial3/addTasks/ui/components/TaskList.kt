@@ -1,10 +1,6 @@
 package com.example.composematerial3.addTasks.ui
 
-import android.util.Log
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.splineBasedDecay
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -35,12 +31,22 @@ fun TasksList(tasksViewModel: TasksViewModel) {
     LazyColumn {
         items(myTask, key = { it.id }) { task ->
             ItemTask(task, tasksViewModel = tasksViewModel)
-            DialogRemove(
-                show = showDialogRemove,
-                onDismiss = { tasksViewModel.onDialogRemoveClose() },
-                taskModel =task ,
-                tasksViewModel = tasksViewModel
-            )
+            if (showDialogRemove) {
+                DialogRemove(
+
+                    onDismiss = { tasksViewModel.onDialogRemoveClose() },
+
+                    onConfirm = {
+                        val selectedIndex = tasksViewModel.selectedItemIndex.value ?: -1
+                        if (selectedIndex != -1) {
+                            val selectedItem = tasksViewModel.task[selectedIndex]
+                            tasksViewModel.onItemRemove(selectedItem)
+                        }
+                    }
+                )
+
+            }
+
         }
     }
 
@@ -48,6 +54,7 @@ fun TasksList(tasksViewModel: TasksViewModel) {
 
 @Composable
 fun ItemTask(taskModel: TaskModel, tasksViewModel: TasksViewModel) {
+
     val offsetX = remember { mutableStateOf(0f) }
     val offsetY = remember { mutableStateOf(0f) }
     var width by remember { mutableStateOf(0f) }
@@ -58,18 +65,22 @@ fun ItemTask(taskModel: TaskModel, tasksViewModel: TasksViewModel) {
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .offset { IntOffset(offsetX.value.roundToInt(), offsetY.value.roundToInt()) }
             .pointerInput(Unit) {
-                detectHorizontalDragGestures { _, dragAmount ->
-                    val originalX = offsetX.value
-                    val newValue = (originalX + dragAmount).coerceIn(0f, width - 300.dp.toPx())
-                    offsetX.value = newValue
-                     if (offsetX.value == width - 300.dp.toPx()) {
-                        tasksViewModel.onShowDialogRemove()
-                    }
-                }
+                detectHorizontalDragGestures(
+                    onDragCancel = { offsetX.value = 0f },
+                    onDragEnd = {offsetX.value = 0f},
+                    onHorizontalDrag = { change, dragAmount ->
+                        val originalX = offsetX.value
+                        val newValue = (originalX + dragAmount).coerceIn(0f, width - 300.dp.toPx())
+                        offsetX.value = newValue
+                        if (offsetX.value == width - 300.dp.toPx()) {
+                            tasksViewModel.onShowDialogRemove(taskModel)
+                        }
+                    })
             },
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White)
     ) {
+
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = taskModel.task, modifier = Modifier
