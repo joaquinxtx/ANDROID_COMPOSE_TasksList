@@ -25,10 +25,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composematerial3.addTasks.ui.components.AddTasksDialog
 import com.example.composematerial3.addTasks.ui.components.FabDialog
+import com.example.composematerial3.addTasks.ui.model.TaskModel
 
 
 @Composable
-fun TasksScreen(tasksViewModel: TasksViewModel, index: Boolean) {
+fun TasksScreen(tasksViewModel: TasksViewModel, index: Boolean ) {
 
     val showDialog: Boolean by tasksViewModel.showDialog.observeAsState(false)
     AnimatedVisibility(
@@ -46,7 +47,7 @@ fun TasksScreen(tasksViewModel: TasksViewModel, index: Boolean) {
             Modifier
                 .fillMaxSize()
         ) {
-            TasksList(tasksViewModel = tasksViewModel)
+            TasksList(tasksViewModel = tasksViewModel )
             AddTasksDialog(
                 show = showDialog,
                 onDismiss = { tasksViewModel.onDialogClose() },

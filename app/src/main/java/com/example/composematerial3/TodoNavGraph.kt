@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composematerial3.addTasks.ui.TasksScreen
 import com.example.composematerial3.addTasks.ui.TasksViewModel
+import com.example.composematerial3.addTasks.ui.model.TaskModel
 import com.example.composematerial3.components.scaffold.MyScaffold
 import com.example.composematerial3.components.scaffold.ScaffoldViewModel
 import com.example.composematerial3.home.ui.HomeScreen
@@ -23,7 +24,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 fun TodoNavGraph(
     navController: NavHostController = rememberNavController(),
     tasksViewModel: TasksViewModel,
-    scaffoldViewModel:ScaffoldViewModel
+    scaffoldViewModel:ScaffoldViewModel,
+
 ) {
     val index: Int by scaffoldViewModel.index.observeAsState(0)
     MyScaffold(content = {  NavHost(navController = navController, startDestination = Routes.TasksList.route) {
@@ -31,7 +33,7 @@ fun TodoNavGraph(
         composable(Routes.TasksList.route) {
 
 
-            TasksScreen(tasksViewModel = tasksViewModel , index = index == 0)
+            TasksScreen(tasksViewModel = tasksViewModel , index = index == 0 )
         }
         composable(Routes.Home.route) {
 

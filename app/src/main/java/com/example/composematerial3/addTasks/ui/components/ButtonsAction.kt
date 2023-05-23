@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ButtonsActions(modifier: Modifier, addTask: () -> Unit, cancel: () -> Unit) {
+fun ButtonsActions(modifier: Modifier, addTask: () -> Unit, cancel: () -> Unit , nameButton:String) {
     Row(modifier = modifier.padding(bottom = 16.dp)) {
         TextButton(onClick = { cancel() }) {
             Text(text = "Cancel")
         }
         TextButton(onClick = { addTask() }) {
-            Text(text = "Accept")
+            Text(text = nameButton)
         }
 
     }
