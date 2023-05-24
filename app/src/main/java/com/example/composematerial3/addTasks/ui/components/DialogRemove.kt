@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -34,7 +35,7 @@ fun DialogRemove( onDismiss: () -> Unit,  onConfirm:()-> Unit){
                             .padding(top = 16.dp)
                     ) {
                         Icon(
-                            Icons.Filled.Delete, contentDescription = " ",
+                            Icons.Outlined.Delete, contentDescription = " ",
                             Modifier
                                 .size(29.dp),
                             tint = Color.Red
@@ -42,14 +43,6 @@ fun DialogRemove( onDismiss: () -> Unit,  onConfirm:()-> Unit){
                         )
 
                     }
-                    Text(
-                        text = "Esta seguro que quiere eliminar esta tarea?",
-                        Modifier
-                            .align(
-                                Alignment.CenterHorizontally
-                            )
-                            .padding(top = 16.dp)
-                    )
                     Divider(
                         thickness = 1.dp,
                         color = Color.LightGray,
@@ -57,6 +50,15 @@ fun DialogRemove( onDismiss: () -> Unit,  onConfirm:()-> Unit){
                             .padding(vertical = 24.dp)
                             .width(560.dp)
                     )
+                    Text(
+                        text = "Desea eliminar tarea?",
+                        Modifier
+                            .align(
+                                Alignment.CenterHorizontally
+                            )
+
+                    )
+
                     Divider(
                         thickness = 1.dp,
                         color = Color.LightGray,

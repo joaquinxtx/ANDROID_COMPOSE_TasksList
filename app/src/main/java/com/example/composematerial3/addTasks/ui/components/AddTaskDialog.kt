@@ -34,7 +34,8 @@ fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, onTaskAdded: (String) -
                         Icon(
                             Icons.Filled.Check, contentDescription = " ",
                             Modifier
-                                .size(29.dp)
+                                .size(29.dp),
+                            tint = Color(0xFF4CAF50)
 
                         )
 
@@ -55,7 +56,9 @@ fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, onTaskAdded: (String) -
                             .width(560.dp)
                     )
                     OutlinedTextField(
-                        colors = TextFieldDefaults.textFieldColors(Color.Gray),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            containerColor = Color(0xFFFCFDFD)
+                        ),
                         value = myTask,
                         onValueChange = { myTask = it },
                         label = { Text("Tarea") },
@@ -63,7 +66,7 @@ fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, onTaskAdded: (String) -
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp)
-                            .background(Color.White)
+
                     )
                     Divider(
                         thickness = 1.dp,
@@ -75,9 +78,9 @@ fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, onTaskAdded: (String) -
                     ButtonsActions(
                         addTask = {
                             onTaskAdded(myTask)
-                            myTask=""
+                            myTask = ""
 
-                            }, modifier = Modifier.align(
+                        }, modifier = Modifier.align(
                             Alignment.End
                         ),
                         cancel = { onDismiss() },

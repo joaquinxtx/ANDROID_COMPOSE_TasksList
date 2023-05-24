@@ -1,5 +1,7 @@
 package com.example.composematerial3.addTasks.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -59,37 +61,41 @@ fun ItemTask(taskModel: TaskModel, tasksViewModel: TasksViewModel) {
     val offsetY = remember { mutableStateOf(0f) }
     var width by remember { mutableStateOf(0f) }
     Card(
-        Modifier
-            .fillMaxWidth()
-            .onSizeChanged { width = it.width.toFloat() }
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .offset { IntOffset(offsetX.value.roundToInt(), offsetY.value.roundToInt()) }
-            .pointerInput(Unit) {
-                detectHorizontalDragGestures(
-                    onDragCancel = { offsetX.value = 0f },
-                    onDragEnd = {offsetX.value = 0f},
-                    onHorizontalDrag = { change, dragAmount ->
-                        val originalX = offsetX.value
-                        val newValue = (originalX + dragAmount).coerceIn(0f, width - 300.dp.toPx())
-                        offsetX.value = newValue
-                        if (offsetX.value == width - 300.dp.toPx()) {
-                            tasksViewModel.onShowDialogRemove(taskModel)
-                        }
-                    })
-            },
-        elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(Color.White)
+        colors= CardDefaults.cardColors(Color(0xFF2196F3)),
+       modifier= Modifier
+           .fillMaxWidth()
+           .onSizeChanged { width = it.width.toFloat() }
+           .padding(horizontal = 16.dp, vertical = 8.dp)
+           .offset { IntOffset(offsetX.value.roundToInt(), offsetY.value.roundToInt()) }
+           .pointerInput(Unit) {
+               detectHorizontalDragGestures(
+                   onDragCancel = { offsetX.value = 0f },
+                   onDragEnd = { offsetX.value = 0f },
+                   onHorizontalDrag = { change, dragAmount ->
+                       val originalX = offsetX.value
+                       val newValue = (originalX + dragAmount).coerceIn(0f, width - 300.dp.toPx())
+                       offsetX.value = newValue
+                       if (offsetX.value == width - 300.dp.toPx()) {
+                           tasksViewModel.onShowDialogRemove(taskModel)
+                       }
+                   })
+           },
+        elevation = CardDefaults.cardElevation(9.dp),
+
     ) {
 
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = taskModel.task, modifier = Modifier
                     .padding(horizontal = 4.dp)
-                    .weight(1f), style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    .weight(1f), style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Medium , color = Color.White)
             )
             Checkbox(
+                modifier=Modifier.background(Color.White),
                 checked = taskModel.selected,
-                onCheckedChange = { tasksViewModel.onCheckBoxSelected(taskModel) })
+                onCheckedChange = { tasksViewModel.onCheckBoxSelected(taskModel) },
+
+            colors = CheckboxDefaults.colors(Color(0xFFFF5722)))
         }
     }
 }

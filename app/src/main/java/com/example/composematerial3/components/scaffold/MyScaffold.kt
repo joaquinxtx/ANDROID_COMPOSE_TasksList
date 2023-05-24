@@ -40,11 +40,11 @@ fun MyScaffold(
 fun MyBottomBar(scaffoldViewModel: ScaffoldViewModel, navController: NavHostController) {
     val index: Int by scaffoldViewModel.index.observeAsState(0)
 
-    NavigationBar(containerColor = Color(0xFF026451)) {
+    NavigationBar(containerColor = Color(0xFF2196F3)) {
 
         NavigationBarItem(
             colors = NavigationBarItemDefaults.colors(
-                indicatorColor = Color(0xFF023C30)
+                indicatorColor = Color(0xFF04467A)
             ),
             selected = index == 0,
             onClick = { scaffoldViewModel.onNavigationWindows(index = 0, navController) },

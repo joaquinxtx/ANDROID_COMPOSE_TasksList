@@ -45,7 +45,7 @@ fun TasksScreen(tasksViewModel: TasksViewModel, index: Boolean ) {
     ) {
         Box(
             Modifier
-                .fillMaxSize()
+                .fillMaxSize().background(Color(0xFFF5F5F5))
         ) {
             TasksList(tasksViewModel = tasksViewModel )
             AddTasksDialog(
