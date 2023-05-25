@@ -55,9 +55,8 @@ Dependencies{
 ![TODOAPP]( app/src/main/res/images/todo-3.png)
 
 ## App
-![TODOAPP]( https://www.canva.com/design/DAFj8ozbclQ/s_2i6liChgyeHJjzC8rJnA/edit?utm_content=DAFj8ozbclQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
-[![TODOAPP]( https://www.canva.com/design/DAFj8ozbclQ/s_2i6liChgyeHJjzC8rJnA/edit?utm_content=DAFj8ozbclQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)]( https://www.canva.com/design/DAFj8ozbclQ/s_2i6liChgyeHJjzC8rJnA/edit?utm_content=DAFj8ozbclQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
-
+![TODOAPP]( app/src/main/res/images/diseñogif.gif)
+![TODOAPP]( app/src/main/res/images/diseñovideo.mp4)
 
 ## Home
 # Project under development currently 🛠⚙
