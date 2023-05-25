@@ -44,8 +44,8 @@ fun DialogRemove( onDismiss: () -> Unit,  onConfirm:()-> Unit){
 
                     }
                     Divider(
-                        thickness = 1.dp,
-                        color = Color.LightGray,
+                        thickness = 2.dp,
+                        color = Color( 0xFFFFAB00),
                         modifier = Modifier
                             .padding(vertical = 24.dp)
                             .width(560.dp)
@@ -60,8 +60,8 @@ fun DialogRemove( onDismiss: () -> Unit,  onConfirm:()-> Unit){
                     )
 
                     Divider(
-                        thickness = 1.dp,
-                        color = Color.LightGray,
+                        thickness = 2.dp,
+                        color = Color( 0xFFFFAB00),
                         modifier = Modifier
                             .padding(top = 24.dp)
                             .width(560.dp)

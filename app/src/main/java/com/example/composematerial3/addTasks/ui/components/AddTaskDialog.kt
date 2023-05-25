@@ -35,7 +35,7 @@ fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, onTaskAdded: (String) -
                             Icons.Filled.Check, contentDescription = " ",
                             Modifier
                                 .size(29.dp),
-                            tint = Color(0xFF4CAF50)
+                            tint = Color(0xFF07C40E)
 
                         )
 
@@ -49,8 +49,8 @@ fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, onTaskAdded: (String) -
                             .padding(top = 16.dp)
                     )
                     Divider(
-                        thickness = 1.dp,
-                        color = Color.LightGray,
+                        thickness = 2.dp,
+                        color = Color(0xFF07C40E),
                         modifier = Modifier
                             .padding(vertical = 24.dp)
                             .width(560.dp)
@@ -69,10 +69,10 @@ fun AddTasksDialog(show: Boolean, onDismiss: () -> Unit, onTaskAdded: (String) -
 
                     )
                     Divider(
-                        thickness = 1.dp,
-                        color = Color.LightGray,
+                        thickness = 2.dp,
+                        color = Color(0xFF07C40E),
                         modifier = Modifier
-                            .padding(top = 24.dp)
+                            .padding(vertical = 24.dp)
                             .width(560.dp)
                     )
                     ButtonsActions(

@@ -1,7 +1,6 @@
 package com.example.composematerial3.addTasks.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,27 +26,27 @@ import kotlin.math.roundToInt
 
 
 @Composable
-fun TasksList(tasksViewModel: TasksViewModel) {
+fun TasksList(tasks: List<TaskModel> , tasksViewModel: TasksViewModel) {
     val showDialogRemove: Boolean by tasksViewModel.showDialogRemove.observeAsState(false)
-    val myTask: List<TaskModel> = tasksViewModel.task
+
     LazyColumn {
-        items(myTask, key = { it.id }) { task ->
-            ItemTask(task, tasksViewModel = tasksViewModel)
-            if (showDialogRemove) {
-                DialogRemove(
+        items(tasks, key = { it.id }) { task ->
+          ItemTask(task, tasksViewModel = tasksViewModel)
+          if (showDialogRemove) {
+              DialogRemove(
 
-                    onDismiss = { tasksViewModel.onDialogRemoveClose() },
+                  onDismiss = { tasksViewModel.onDialogRemoveClose() },
 
-                    onConfirm = {
-                        val selectedIndex = tasksViewModel.selectedItemIndex.value ?: -1
-                        if (selectedIndex != -1) {
-                            val selectedItem = tasksViewModel.task[selectedIndex]
-                            tasksViewModel.onItemRemove(selectedItem)
-                        }
-                    }
-                )
+                  onConfirm = {
+                      val selectedIndex = tasksViewModel.selectedItemIndex.value ?: -1
+                      if (selectedIndex != -1) {
+                          val selectedItem = tasks[selectedIndex]
+                          tasksViewModel.onItemRemove(selectedItem)
+                      }
+                  }
+              )
 
-            }
+          }
 
         }
     }
@@ -61,7 +60,7 @@ fun ItemTask(taskModel: TaskModel, tasksViewModel: TasksViewModel) {
     val offsetY = remember { mutableStateOf(0f) }
     var width by remember { mutableStateOf(0f) }
     Card(
-        colors= CardDefaults.cardColors(Color(0xFF2196F3)),
+        colors= CardDefaults.cardColors(Color(0xFF131313)),
        modifier= Modifier
            .fillMaxWidth()
            .onSizeChanged { width = it.width.toFloat() }
@@ -91,11 +90,11 @@ fun ItemTask(taskModel: TaskModel, tasksViewModel: TasksViewModel) {
                     .weight(1f), style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Medium , color = Color.White)
             )
             Checkbox(
-                modifier=Modifier.background(Color.White),
+                modifier=Modifier.background(Color(0xFF03A9F4)),
                 checked = taskModel.selected,
                 onCheckedChange = { tasksViewModel.onCheckBoxSelected(taskModel) },
 
-            colors = CheckboxDefaults.colors(Color(0xFFFF5722)))
+            colors = CheckboxDefaults.colors(Color(0xFFE91E63)))
         }
     }
 }

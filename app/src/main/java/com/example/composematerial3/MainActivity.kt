@@ -15,7 +15,9 @@ import com.example.composematerial3.addTasks.ui.TasksScreen
 import com.example.composematerial3.addTasks.ui.TasksViewModel
 import com.example.composematerial3.components.scaffold.ScaffoldViewModel
 import com.example.composematerial3.ui.theme.ComposeMaterial3Theme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val tasksViewModel : TasksViewModel by viewModels()

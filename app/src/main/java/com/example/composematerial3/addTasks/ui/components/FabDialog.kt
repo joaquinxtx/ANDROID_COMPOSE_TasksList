@@ -14,7 +14,7 @@ fun FabDialog(modifier: Modifier, tasksViewModel: TasksViewModel) {
 
     FloatingActionButton(onClick = {
         tasksViewModel.onShowDialogClick()
-    }, modifier = modifier, containerColor = Color(0xFFFF5722) , contentColor = Color.White) {
+    }, modifier = modifier, containerColor = Color(0xFF00BD61), contentColor = Color.White) {
         Icon(Icons.Filled.Add, contentDescription = "")
     }
 }
