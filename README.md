@@ -56,7 +56,7 @@ Dependencies{
 
 ## App
 ![TODOAPP]( app/src/main/res/images/diseñogif.gif)
-![TODOAPP]( app/src/main/res/images/diseñovideo.mp4)
+
 
 ## Home
 # Project under development currently 🛠⚙
