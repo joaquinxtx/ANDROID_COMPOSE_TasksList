@@ -55,10 +55,8 @@ Dependencies{
 ![TODOAPP]( app/src/main/res/images/todo-3.png)
 
 ## App
-<video width="320" height="240" controls>
-  <source src="app/src/main/res/images/video.mp4" type="video/mp4">
-  Tu navegador no admite la etiqueta de video.
-</video>
+![TODOAPP]( app/src/main/res/images/video.mp4)
+
 
 
 ## Home
