@@ -1,5 +1,7 @@
 package com.example.composematerial3.presentation.screens.addTasks.components
 
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
@@ -15,12 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.composematerial3.R
 import com.example.composematerial3.domain.model.TaskModel
 import com.example.composematerial3.presentation.screens.addTasks.TasksViewModel
 import kotlin.math.roundToInt
@@ -28,35 +32,51 @@ import kotlin.math.roundToInt
 
 @Composable
 fun TasksList(tasks: List<TaskModel>, vm: TasksViewModel = hiltViewModel()) {
+
     val showDialogRemove: Boolean by vm.showDialogRemove.observeAsState(false)
-    LazyColumn {
-        items(tasks, key = {it.id}) { task ->
-            ItemTask(task, vm = vm)
-            if (showDialogRemove ) {
-                DialogRemove(
-                    onDismiss = { vm.onDialogRemoveClose() },
-                    onConfirm = {
-                        val selectedIndex = vm.selectedItemIndex.value ?: -1
-                        if (selectedIndex != -1) {
-                            val selectedItem = tasks[selectedIndex]
-                            vm.onItemRemove(selectedItem)
+    if (tasks.isEmpty()) {
+        // Mostrar imagen en el centro de la pantalla
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable.emtylist),
+                contentDescription = "Empty Image"
+            )
+        }
+    }else{
+
+        LazyColumn {
+            items(tasks, key = { it.id }) { task ->
+                ItemTask(task, vm = vm)
+                if (showDialogRemove) {
+                    DialogRemove(
+                        onDismiss = { vm.onDialogRemoveClose() },
+                        onConfirm = {
+                            val selectedIndex = vm.selectedItemIndex.value ?: -1
+                            if (selectedIndex != -1) {
+                                val selectedItem = tasks[selectedIndex]
+                                vm.onItemRemove(selectedItem)
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun ItemTask(taskModel: TaskModel, vm: TasksViewModel) {
+fun ItemTask(taskModel: TaskModel, vm: TasksViewModel ) {
 
+    var isSelected by remember { mutableStateOf(taskModel.selected) }
 
     val offsetX = remember { mutableStateOf(0f) }
     val offsetY = remember { mutableStateOf(0f) }
     var width by remember { mutableStateOf(0f) }
     Card(
-        colors = CardDefaults.cardColors(Color(0xFF131313)),
+        colors = CardDefaults.cardColors(Color(0xFFF7F6F6)),
         modifier = Modifier
             .fillMaxWidth()
             .onSizeChanged { width = it.width.toFloat() }
@@ -75,7 +95,7 @@ fun ItemTask(taskModel: TaskModel, vm: TasksViewModel) {
                         }
                     })
             },
-        elevation = CardDefaults.cardElevation(9.dp),
+        elevation = CardDefaults.cardElevation(6.dp),
 
         ) {
 
@@ -92,11 +112,15 @@ fun ItemTask(taskModel: TaskModel, vm: TasksViewModel) {
                 )
             )
             Checkbox(
-                modifier = Modifier.background(Color(0xFF03A9F4)),
-                checked = taskModel.selected,
-                onCheckedChange = { vm.onCheckBoxSelected(taskModel) },
 
-                colors = CheckboxDefaults.colors(Color(0xFFE91E63))
+                checked =isSelected,
+                onCheckedChange = {
+                    isSelected = it // Actualiza el estado de selección
+                    taskModel.selected = it
+                    vm.onCheckBoxSelected(taskModel)
+                                  },
+
+
             )
         }
     }

@@ -22,7 +22,7 @@ fun ContentTask(vm: TasksViewModel = hiltViewModel()) {
     Box(
         Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F5F5))
+            .background(Color(0xFFFFFEFE))
     ) {
         GetTask()
 

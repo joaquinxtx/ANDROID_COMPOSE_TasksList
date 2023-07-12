@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composematerial3.domain.Resource
 import com.example.composematerial3.domain.model.TaskModel
+
 import com.example.composematerial3.domain.useCase.*
-import com.example.composematerial3.presentation.screens.addTasks.TasksUiState.Success
 import com.example.composematerial3.presentation.screens.addTasks.mapper.toTask
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -95,11 +95,23 @@ class TasksViewModel @Inject constructor(
     }
 
     fun onCheckBoxSelected(taskModel: TaskModel) = viewModelScope.launch {
-        taskModel.selected = !taskModel.selected
-        _taskState.value = _taskState.value.copy(selected = taskModel.selected)
+        val tasks = taskResponse?.let { resource ->
+            if (resource is Resource.Success) {
+                resource.data
+            } else {
+                null
+            }
+        }
+        if (tasks != null) {
+            val index = tasks.indexOfFirst { it.id == taskModel.id }
+            if (index != -1) {
+                setSelectedItemIndex(index)
+                taskModel.selected = !taskModel.selected
+            }
+        }
+
         Log.d("vm", "${taskModel.selected}")
     }
-
 
 
     fun onTaskInput(task: String) {
@@ -109,9 +121,10 @@ class TasksViewModel @Inject constructor(
     private fun getTask() = viewModelScope.launch {
         taskResponse = Resource.Loading
         taskUseCase.getTasks().collect { result ->
-            taskResponse =  Resource.Success(result)
+            taskResponse = Resource.Success(result)
         }
     }
+
     fun onItemRemove(task: TaskModel) {
         viewModelScope.launch {
             deleteTask(task.id.toString())

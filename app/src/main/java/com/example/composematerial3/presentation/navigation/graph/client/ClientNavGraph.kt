@@ -20,7 +20,7 @@ fun ClientNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         route = Graph.CLIENT,
-        startDestination = NavigationScreen.Home.route
+        startDestination = NavigationScreen.List.route
     ) {
         composable(route = NavigationScreen.List.route) {
             TasksScreen(navController)
